@@ -13,7 +13,7 @@ func (s Set) Add(element ...string) {
 	return
 }
 
-func (s Set) Has(element string) {
+func (s Set) Has(element string) bool {
 	_, ok := s[element]
 	return ok
 }
