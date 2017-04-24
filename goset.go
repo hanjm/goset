@@ -23,7 +23,7 @@ func (s Set) Del(element string) {
 	return
 }
 
-func (s Set) ToList() {
+func (s Set) ToList() []string {
 	elements := make([]string, s.Len())
 	i := 0
 	for k := range s {
