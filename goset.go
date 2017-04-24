@@ -1,5 +1,9 @@
 package goset
 
+import (
+	"bytes"
+)
+
 type Set map[string]struct{}
 
 func (s Set) Len() int {
@@ -31,4 +35,25 @@ func (s Set) ToList() []string {
 		i++
 	}
 	return elements
+}
+
+func (s *Set) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	lenOfSet := s.Len()
+	i := 1
+	if lenOfSet > 0 {
+		buf.WriteString("[\"")
+	} else {
+		buf.WriteString("[")
+	}
+	for k := range *s {
+		buf.WriteString(k)
+		if i < lenOfSet {
+			buf.WriteString("\",\"")
+		} else {
+			buf.WriteString("\"")
+		}
+	}
+	buf.WriteString("]")
+	return buf.Bytes(), nil
 }
