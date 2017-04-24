@@ -2,6 +2,7 @@ package goset
 
 import (
 	"bytes"
+	"encoding/json"
 )
 
 type Set map[string]struct{}
@@ -53,7 +54,17 @@ func (s *Set) MarshalJSON() ([]byte, error) {
 		} else {
 			buf.WriteString("\"")
 		}
+		i++
 	}
 	buf.WriteString("]")
 	return buf.Bytes(), nil
+}
+
+func (s *Set) UnmarshalJSON(data []byte) error {
+	var list []string
+	if err := json.Unmarshal(data, &list); err != nil {
+		return err
+	}
+	s.Add(list...)
+	return nil
 }
